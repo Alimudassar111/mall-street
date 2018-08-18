@@ -1,29 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {Router, Scene} from 'react-native-router-flux';
 
-export default class App extends React.Component {
-  state = {
-    name: ''
-  }
-  OpenAlert = () => {
-    alert(`this is you typed: ${this.state.name}`)
-  }
-  textChanged = text => {
-    this.setState({
-      name: text
-    })
-  }
+import Todo from './Todo'
+import Home from './Home'
+export default class App extends Component {
   render() {
-    const {name} = this.state
-    return (
+    return(
       <View style={styles.container}>
-        <Text style={styles.text}>Wow, Welcome to Native Development.</Text>
-        <TextInput placeholder="enter your name" value={name} onChangeText={this.textChanged} />
-        <TouchableOpacity onPress={this.OpenAlert}>
-          <Text>Tap me</Text>
-        </TouchableOpacity>
+        <Router>
+          <Scene key="root">
+            <Scene key={'home'} title="Home" component={Home} />
+            <Scene key={'todo'} title="Todo" path={"todo"} component={Todo} back/>
+          </Scene>
+        </Router>
       </View>
-    );
+      )
   }
 }
 
@@ -31,11 +23,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold'
   }
-});
+})
+
